@@ -11,8 +11,6 @@
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
 
-// to get X window ID
-#include <FL/x.H>
 
 #include <pthread.h>
 
@@ -28,8 +26,7 @@ class Widget
     LV2UI_Write_Function write_function;
     
     
-    Widget();
-    Window getXID();
+    Widget(void* x);
 
   protected:
     pthread_t fl_thread;

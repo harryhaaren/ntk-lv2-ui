@@ -41,6 +41,17 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
         return NULL;
     }
     
+    void* parentXwindow = 0;
+    
+    for (int i = 0; features[i]; ++i) {
+      if (!strcmp(features[i]->URI, LV2_UI__parent)) {
+        cout << "got parent UI" << endl;
+        parentXwindow = features[i]->data;
+      }
+    }
+    
+    
+    
     SinSynthGUI* self = (SinSynthGUI*)malloc(sizeof(SinSynthGUI));
     
     cout << "Allocated SourceGUI!" << endl;
@@ -48,7 +59,7 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
     if (self == NULL) return NULL;
     
     cout << "Creating UI!" << endl;
-    self->widget = new Widget();
+    self->widget = new Widget( parentXwindow );
     
     
     cout << "Writing controller f(x)!" << endl;
@@ -56,9 +67,9 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
     self->widget->controller = controller;
     self->widget->write_function = write_function;
     
-    cout << "returning..." << int(self->widget->getXID()) << endl;
+    //cout << "returning..." << int(self->widget->getXID()) << endl;
     
-    return (LV2UI_Handle)self->widget->getXID();
+    return (LV2UI_Handle)parentXwindow;
 }
 
 static void cleanup(LV2UI_Handle ui) {
