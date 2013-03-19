@@ -27,6 +27,7 @@ class Widget
     
     
     Widget(void* x);
+    void idle();
 
   protected:
     pthread_t fl_thread;
@@ -38,7 +39,9 @@ class Widget
     
     Window xWindowID;
     
-    static void* callback(void*);
+    
+    
+    //static void* callback(void*);
     
     //bool on_expose_event(GdkEventExpose* event);
     //bool on_button_press_event(GdkEventButton* event);

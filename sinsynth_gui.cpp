@@ -44,6 +44,7 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
     void* parentXwindow = 0;
     
     for (int i = 0; features[i]; ++i) {
+      cout << "feature " << features[i]->URI << endl;
       if (!strcmp(features[i]->URI, LV2_UI__parent)) {
         cout << "got parent UI" << endl;
         parentXwindow = features[i]->data;
@@ -54,13 +55,12 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
     
     SinSynthGUI* self = (SinSynthGUI*)malloc(sizeof(SinSynthGUI));
     
-    cout << "Allocated SourceGUI!" << endl;
+    cout << "Allocated GUI!" << endl;
     
     if (self == NULL) return NULL;
     
     cout << "Creating UI!" << endl;
     self->widget = new Widget( parentXwindow );
-    
     
     cout << "Writing controller f(x)!" << endl;
     
@@ -69,7 +69,7 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
     
     //cout << "returning..." << int(self->widget->getXID()) << endl;
     
-    return (LV2UI_Handle)parentXwindow;
+    return (LV2UI_Handle)self;
 }
 
 static void cleanup(LV2UI_Handle ui) {
@@ -132,8 +132,34 @@ static void port_event(LV2UI_Handle ui,
     return;
 }
 
+
+static int
+idle(LV2UI_Handle handle)
+{
+	SinSynthGUI* self = (SinSynthGUI*)handle;
+  
+  cout << "idle" << endl;
+  
+  self->widget->idle();
+  
+	return 0;
+}
+
+static const LV2UI_Idle_Interface idle_iface = { idle };
+
+static const void*
+extension_data(const char* uri)
+{
+  cout << "UI extension data!" << endl;
+	if (!strcmp(uri, LV2_UI__idleInterface)) {
+    cout << "giving host idle interface!" << endl;
+		return &idle_iface;
+	}
+	return NULL;
+}
+
 static LV2UI_Descriptor descriptors[] = {
-    {SINSYNTH_UI_URI, instantiate, cleanup, port_event, NULL}
+    {SINSYNTH_UI_URI, instantiate, cleanup, port_event, extension_data}
 };
 
 const LV2UI_Descriptor * lv2ui_descriptor(uint32_t index) {
