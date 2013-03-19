@@ -19,22 +19,9 @@ Widget::Widget(void* parentXwindow)
 {
   frequency = 440;
   
-  //Fl_Window * win = fl_find( parentXwindow );
   
+  // In case FLTK hasn't set up yet
   fl_open_display();
-  
-  //Fl_Window * win = fl_find( (Window)parentXwindow );
-  
-  /*
-  if ( win )
-  {
-    cout << "found win with Xid" << endl;
-  }
-  else
-  {
-    cout << "creating new window, didnt' find window with XID" << endl;
-  }
-  */
   
   Fl_Window* win = new Fl_Window(400,200,"NTK LV2 GUI");
   
@@ -43,14 +30,20 @@ Widget::Widget(void* parentXwindow)
   button->callback( button_callback, 0 );
   win->end();
   
-  // this should be commented to stop UI showing up in its own window!
+  // here the window recieves a X window is, before this call the xid() returns 0
   win->show();
   
   
   cout << "reparenting into JALV window " << (Window)parentXwindow  << " from fl window " << fl_xid(win) << endl;
   
   //Fl_X * fl_xPtr = Fl_X::set_xid( win, (Window)parentXwindow);
+  
+  
+  // should be this one!
   XReparentWindow( fl_display, fl_xid( win ), (Window)parentXwindow, 0, 0 );
+  
+  //XReparentWindow( fl_display, (Window)parentXwindow, fl_xid( win ), 0, 0 );
+  
   
   //win->hide();
   //win->show();
@@ -61,9 +54,7 @@ Widget::Widget(void* parentXwindow)
   // If not shown() your implementation must call
   // either Fl_X::set_xid() or Fl_X::make_xid()
   
-  
-  
-  Fl::lock();
+   Fl::lock();
   
 }
 
