@@ -44,10 +44,10 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
     void* parentXwindow = 0;
     
     for (int i = 0; features[i]; ++i) {
-      cout << "feature " << features[i]->URI << endl;
+      //cout << "feature " << features[i]->URI << endl;
       if (!strcmp(features[i]->URI, LV2_UI__parent)) {
-        cout << "got parent UI" << endl;
         parentXwindow = features[i]->data;
+        cout << "got parent UI feature: X11 id = " << (Window)parentXwindow << endl;
       }
     }
     
@@ -137,8 +137,6 @@ static int
 idle(LV2UI_Handle handle)
 {
 	SinSynthGUI* self = (SinSynthGUI*)handle;
-  
-  cout << "idle" << endl;
   
   self->widget->idle();
   
