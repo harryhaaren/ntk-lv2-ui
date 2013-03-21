@@ -46,9 +46,17 @@ Widget::Widget(void* parentXwindow)
   // should be this one!
   XReparentWindow( fl_display, fl_xid( win ), (Window)parentXwindow, 0, 0 );
   
-  //XReparentWindow( fl_display, (Window)parentXwindow, fl_xid( win ), 0, 0 );
   
+  Fl_Window * new_win = fl_find( (Window) parentXwindow );
   
+  if ( new_win )
+  {
+    cout << "found window by XID: its " << fl_xid(new_win) << endl;
+  }
+  else
+  {
+    cout << "cannot find XID of reparented window!" << endl;
+  }
   
   //win->hide();
   //win->show();
