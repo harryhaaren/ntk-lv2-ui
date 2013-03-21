@@ -43,14 +43,17 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
     
     void* parentXwindow = 0;
     
+    LV2UI_Resize* resize = NULL;
+    
     for (int i = 0; features[i]; ++i) {
       //cout << "feature " << features[i]->URI << endl;
       if (!strcmp(features[i]->URI, LV2_UI__parent)) {
         parentXwindow = features[i]->data;
         cout << "got parent UI feature: X11 id = " << (Window)parentXwindow << endl;
+      } else if (!strcmp(features[i]->URI, LV2_UI__resize)) {
+        resize = (LV2UI_Resize*)features[i]->data;
       }
     }
-    
     
     
     SinSynthGUI* self = (SinSynthGUI*)malloc(sizeof(SinSynthGUI));
@@ -66,6 +69,10 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
     
     self->widget->controller = controller;
     self->widget->write_function = write_function;
+    
+    if (resize) {
+      resize->ui_resize(resize->handle, 600,600);
+    }
     
     //cout << "returning..." << int(self->widget->getXID()) << endl;
     

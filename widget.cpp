@@ -3,10 +3,7 @@
 
 #include "widget.h"
 
-// #define FL_LIBRARY
-#define FL_INTERNALS
-
-#include <FL/x.H>
+#include "xembed.cc"
 
 #include <iostream>
 using namespace std;
@@ -19,11 +16,10 @@ Widget::Widget(void* parentXwindow)
 {
   frequency = 440;
   
-  
   // In case FLTK hasn't set up yet
   fl_open_display();
   
-  win = new Fl_Window(400,200,"NTK LV2 GUI");
+  win = new Xembed((uintptr_t)parentXwindow, 400,200);
   
   win->begin();
   Fl_Button* button = new Fl_Button(50,50,80,25,"caption");
@@ -33,42 +29,8 @@ Widget::Widget(void* parentXwindow)
   // here the window recieves a X window is, before this call the xid() returns 0
   
   win->size(600,600);
-  
   win->show();
-  
-  Fl::check();
-  
-  cout << "reparenting into JALV window " << (Window)parentXwindow  << " from fl window " << fl_xid(win) << endl;
-  
-  //Fl_X * fl_xPtr = Fl_X::set_xid( win, (Window)parentXwindow);
-  
-  
-  // should be this one!
-  XReparentWindow( fl_display, fl_xid( win ), (Window)parentXwindow, 0, 0 );
-  
-  
-  Fl_Window * new_win = fl_find( (Window) parentXwindow );
-  
-  if ( new_win )
-  {
-    cout << "found window by XID: its " << fl_xid(new_win) << endl;
-  }
-  else
-  {
-    cout << "cannot find XID of reparented window!" << endl;
-  }
-  
-  //win->hide();
-  //win->show();
-  
-  
-  // hack shown() to return true for embedding
-  // this page  (http://www.fltk.org/doc-1.3/osissues.html)  says
-  // If not shown() your implementation must call
-  // either Fl_X::set_xid() or Fl_X::make_xid()
-  
-   Fl::lock();
-  
+  XMapRaised(fl_display, fl_xid( win ));
 }
 
 void Widget::idle()

@@ -28,7 +28,7 @@ def configure(conf):
     else:
         conf.env.append_unique('CFLAGS', '-std=c99')
         
-    conf.env.append_unique('CXXFLAGS', '-std=c++11')
+    conf.env.append_unique('CXXFLAGS', '-std=c++0x')
     conf.env.append_unique('CXXFLAGS', '-fPIC')
     conf.env.append_unique('CXXFLAGS', '-g')
 

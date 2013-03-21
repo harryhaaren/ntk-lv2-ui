@@ -17,6 +17,8 @@
 // LV2UI stuff
 #include "lv2/lv2plug.in/ns/extensions/ui/ui.h"
 
+class Xembed;
+
 class Widget
 {
   public:
@@ -32,7 +34,7 @@ class Widget
   protected:
     pthread_t fl_thread;
     
-    Fl_Window* win;
+    Xembed* win;
     
     // stores frequency we're currently at.
     float frequency;
