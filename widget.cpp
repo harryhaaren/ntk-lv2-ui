@@ -23,7 +23,7 @@ Widget::Widget(void* parentXwindow)
   // In case FLTK hasn't set up yet
   fl_open_display();
   
-  Fl_Window* win = new Fl_Window(400,200,"NTK LV2 GUI");
+  win = new Fl_Window(400,200,"NTK LV2 GUI");
   
   win->begin();
   Fl_Button* button = new Fl_Button(50,50,80,25,"caption");
@@ -31,8 +31,12 @@ Widget::Widget(void* parentXwindow)
   win->end();
   
   // here the window recieves a X window is, before this call the xid() returns 0
+  
+  win->size(600,600);
+  
   win->show();
   
+  Fl::check();
   
   cout << "reparenting into JALV window " << (Window)parentXwindow  << " from fl window " << fl_xid(win) << endl;
   
@@ -43,6 +47,7 @@ Widget::Widget(void* parentXwindow)
   XReparentWindow( fl_display, fl_xid( win ), (Window)parentXwindow, 0, 0 );
   
   //XReparentWindow( fl_display, (Window)parentXwindow, fl_xid( win ), 0, 0 );
+  
   
   
   //win->hide();
