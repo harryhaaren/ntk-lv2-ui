@@ -37,7 +37,7 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
                 const LV2_Feature * const * features) {
 
     if (strcmp(plugin_uri, SINSYNTH_URI) != 0) {
-        fprintf(stderr, "SORCER_URI error: this GUI does not support plugin with URI %s\n", plugin_uri);
+        fprintf(stderr, "SINSYNTH_URI error: this GUI does not support plugin with URI %s\n", plugin_uri);
         return NULL;
     }
     
@@ -71,7 +71,7 @@ static LV2UI_Handle instantiate(const struct _LV2UI_Descriptor * descriptor,
     self->widget->write_function = write_function;
     
     if (resize) {
-      resize->ui_resize(resize->handle, 600,600);
+      resize->ui_resize(resize->handle, self->widget->getWidth(),self->widget->getHeight());
     }
     
     //cout << "returning..." << int(self->widget->getXID()) << endl;
