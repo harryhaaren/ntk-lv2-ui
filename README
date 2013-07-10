@@ -3,3 +3,6 @@
 
 A repo containing a sine wave generating LV2 plugin using
 the NTK toolkit.
+
+Note: this plugin works in Ardour3 as of today, 10-07-13, using the latest
+SVN of Ardour3, the LV2 stack, and also SUIL / LILV.
