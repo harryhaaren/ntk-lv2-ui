@@ -143,11 +143,10 @@ static void port_event(LV2UI_Handle ui,
 static int
 idle(LV2UI_Handle handle)
 {
-	SinSynthGUI* self = (SinSynthGUI*)handle;
-  
+  SinSynthGUI* self = (SinSynthGUI*)handle;
   self->widget->idle();
   
-	return 0;
+  return 0;
 }
 
 static const LV2UI_Idle_Interface idle_iface = { idle };
@@ -156,11 +155,11 @@ static const void*
 extension_data(const char* uri)
 {
   cout << "UI extension data!" << endl;
-	if (!strcmp(uri, LV2_UI__idleInterface)) {
+  if (!strcmp(uri, LV2_UI__idleInterface)) {
     cout << "giving host idle interface!" << endl;
-		return &idle_iface;
-	}
-	return NULL;
+    return &idle_iface;
+  }
+  return NULL;
 }
 
 static LV2UI_Descriptor descriptors[] = {

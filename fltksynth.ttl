@@ -33,7 +33,7 @@
 	a lv2:Plugin ,
 		lv2:AmplifierPlugin ;
 	doap:maintainer <http://harryExample> ;
-	doap:name "Sin wave synthesizer";
+	doap:name "NTK LV2 UI Sin Wave Synth";
 	doap:license <http://opensource.org/licenses/isc> ;
   lv2:optionalFeature lv2:hardRTCapable ;
   

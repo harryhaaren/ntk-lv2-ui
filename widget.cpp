@@ -7,10 +7,7 @@
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Double_Window.H>
 
-
-#define FL_INTERNALS 1
 #include <FL/x.H>
-//#include "xembed.cc"
 
 #include <iostream>
 using namespace std;
@@ -31,7 +28,7 @@ Widget::Widget(void* parentXwindow)
   button->callback( button_callback, 0 );
   win->end();
   
-  //win->show();
+  win->border(0);
   
   fl_embed( win, (Window)parentXwindow );
 }
