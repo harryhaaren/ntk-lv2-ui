@@ -88,6 +88,7 @@ def build(bld):
     # Build UI library
     obj = bld(features     = 'cxx cshlib',
               env          = penv,
+              linkflags    = '-Wl,-z,nodelete', 
               source       = 'widget.cpp sinsynth_gui.cpp',
               name         = 'sinsynth_gui',
               target       = '%s/fltksynth_gui' % bundle,
