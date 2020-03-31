@@ -33,7 +33,7 @@ def configure(conf):
     conf.env.append_unique('CXXFLAGS', '-g')
 
     if not autowaf.is_child():
-        autowaf.check_pkg(conf, 'lv2core', uselib_store='LV2CORE')
+        autowaf.check_pkg(conf, 'lv2', uselib_store='LV2CORE')
         autowaf.check_pkg(conf, 'ntk', uselib_store='NTK')
 
     # Set env['pluginlib_PATTERN']
